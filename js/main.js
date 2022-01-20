@@ -7,30 +7,32 @@ var brands = ['BOSCH', 'Makita', 'Vagner', 'Mega', 'Proline'];
 var titles = [
     'Перфоратор BOSCH BFG 2000',
     'Перфоратор BOSCH BFG 3000',
-    'Перфоратор BOSCH BFG 6000', 'Перфоратор BOSCH BFG 9000', 'Шуруповерт Makita TD-110'
+    'Перфоратор BOSCH BFG 6000', 
+    'Перфоратор BOSCH BFG 9000', 
+    'Шуруповерт Makita TD-110'
 ];
 
 var flags = ['new', 'promo', ''];
 var isElectricValue = [false, true];
+
 //End_JS_Task #1
 
 var contactBtn = document.querySelector('.contacts-button');
 var modalWrite = document.querySelector('.modal-write');
 var modalWriteClose = modalWrite.querySelector('.modal-close');
-//Start_JS_Task #1
 
+//Start_JS_Task #1
 function getRN(min, max) {
     return Math.floor(Math.random() * (max - min) + min);
 }
 
 function createGoodCards(){
     for(let i = 0; i < PRODUCT_COUNT; i++){
-        let brand = ;
         let title = titles[Math.floor(Math.random()*titles.length)];
         let price = getRN(5000, 20000);
         let discount = Math.round(price*1.15);
             discount = Math.floor(discount/500)*500;
-        let flag = flags[Math.round(Math.random()*3)];
+        let flag = flags[Math.floor(Math.random()*3)];
         let isElectric = isElectricValue[Math.round(Math.random())];
 
         goodsCards.push({
