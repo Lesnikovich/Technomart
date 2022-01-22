@@ -1,5 +1,5 @@
 ﻿//Start_JS_Task #1
-var PRODUCT_COUNT = 18;
+var PRODUCT_COUNT = 6;
 
 var goodsCards = [];
 var urls = ['bosch-2000', 'bosch-3000', 'bosch-6000', 'bosch-9000', 'makita-td-110'];
@@ -23,7 +23,7 @@ var modalWriteClose = modalWrite.querySelector('.modal-close');
 
 //Start_JS_Task #1
 function getRN(min, max) {
-    return Math.floor(Math.random() * (max - min) + min);
+    return Math.floor((Math.random() * (max - min) + min)/500)*500;
 }
 
 function createGoodCards(){
@@ -40,7 +40,7 @@ function createGoodCards(){
             brand: brands[Math.floor(Math.random()*brands.length)],
             title: title,
             price: price,
-            discount: discount,
+            discount: (Math.round(Math.random()))?'':discount,
             flag: flag, 
             isElectric: isElectric
         });   
@@ -48,9 +48,55 @@ function createGoodCards(){
         console.log(goodsCards[i]);
     }
 }
-//End_JS_Task #1
 
 createGoodCards();
+//End_JS_Task #1
+
+//Start_JS_Task #2
+
+var catalogList = document.querySelector('.catalog-list');
+var catalogListItems = catalogList.querySelectorAll('li');
+var fragmentCatalogList = document.createDocumentFragment();
+var templateCatalogItem = document.querySelector('#catalog-item').content.querySelector('li');
+
+function removeAllGoodCards(){
+    for(var i=0; i<catalogListItems.length; i++){
+        catalogListItems[i].remove();
+    }
+}
+
+function appendGoodCards(){
+
+    for(var i=0; i<PRODUCT_COUNT; i++){     
+        var tempCatalogItem = templateCatalogItem.cloneNode(true);
+    
+        tempCatalogItem.querySelector('img').src = `img/catalog/${goodsCards[i].name}.jpg`;
+        tempCatalogItem.querySelector('.item-title').textContent = goodsCards[i].title;
+        tempCatalogItem.querySelector('.price').textContent = goodsCards[i].price;
+        tempCatalogItem.querySelector('.discount').textContent = goodsCards[i].discount;
+        
+        if(goodsCards[i].flag!=''){
+            var templateFlag = document.querySelector('#flag-new').content.querySelector('.flag');
+            var tempFlag = templateFlag.cloneNode(true);
+    
+            if(goodsCards[i].flag==='promo'){
+                tempFlag.classList.remove('flag-new');
+                tempFlag.classList.add('flag-promo');
+                tempFlag.querySelector('.visually-hidden').textContent="Акция";
+            }  
+            tempCatalogItem.insertAdjacentHTML('afterbegin', tempFlag.outerHTML);
+        }
+    
+        fragmentCatalogList.appendChild(tempCatalogItem);
+    }
+    
+    catalogList.appendChild(fragmentCatalogList);
+}
+
+removeAllGoodCards();
+appendGoodCards();
+
+//End_JS_Task #2
 
 contactBtn.addEventListener('click', onContactBtnClick);
 
